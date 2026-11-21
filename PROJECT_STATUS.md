@@ -22,10 +22,11 @@ Private-lab host discovery, bounded TCP port/service inspection, Nmap XML parsin
 ## Work log — 2026-11-21
 - Repository URL received and verified as an existing public repository.
 - Version 1.0 scope converted into the initial project structure.
-- Initial source, tests, documentation, and CI foundation prepared for upload.
+- Uploaded the initial Python package, CLI, documentation, sample XML, tests, and GitHub Actions workflow.
+- Added JSON/CSV/HTML reporting, local scan-history support, and safety checks.
 
 ## Verification
-GitHub Actions is configured to compile Python and run synthetic unit tests. Record the actual result after execution; upload alone is not proof of runtime correctness.
+GitHub Actions run #11 (commit `56da4477c10096059f9bdc1a8082899a26e27993`) completed successfully on 2026-11-21. Python compilation passed and all 9 synthetic unit tests passed. An earlier run exposed a discovery-mode XML-output mismatch; the command was corrected to use `-oX -`, and the follow-up run passed. No live network scan was performed by CI.
 
 ## Future backlog (not part of initial scope)
 Signed release artifacts, offline report visualizations, and more synthetic XML edge-case fixtures.

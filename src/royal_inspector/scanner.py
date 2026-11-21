@@ -18,7 +18,7 @@ def build_command(target: str, mode: str = "scan") -> list[str]:
     target_text = str(validate_target(target))
     executable = shutil.which("nmap") or "nmap"
     if mode == "discover":
-        return [executable, "-sn", "-T2", "--", target_text]
+        return [executable, "-sn", "-oX", "-", "-T2", "--", target_text]
     if mode == "scan":
         return [executable, "-sV", "--version-light", "--top-ports", "100", "-T2", "-oX", "-", "--", target_text]
     raise ValueError("Unsupported scan mode.")

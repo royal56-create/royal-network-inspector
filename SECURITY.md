@@ -9,3 +9,6 @@ Not supported: exploitation, NSE scripts, brute force, credential collection, st
 Report vulnerabilities through a private GitHub Security Advisory when available. Do not publish sensitive scan output, credentials, internal host inventories, or exploitable details in public issues.
 
 These guardrails reduce risk but cannot prove authorization or guarantee a check is harmless in every environment. Obtain permission from the network owner.
+## User responsibility and warranty notice
+
+Use this project only for lawful learning and on resources you own or are explicitly authorized to use. Review all code and commands before running them, keep independent backups, and protect private data. Use is at your own risk. The project is supplied “as is” without warranties, to the maximum extent permitted by applicable law. Nothing here excludes non-waivable rights, liabilities, or obligations. An educational-purpose notice is not permission to access or test third-party systems.

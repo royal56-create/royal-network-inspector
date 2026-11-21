@@ -28,5 +28,15 @@ Private-lab host discovery, bounded TCP port/service inspection, Nmap XML parsin
 ## Verification
 GitHub Actions run #11 (commit `56da4477c10096059f9bdc1a8082899a26e27993`) completed successfully on 2026-11-21. Python compilation passed and all 9 synthetic unit tests passed. An earlier run exposed a discovery-mode XML-output mismatch; the command was corrected to use `-oX -`, and the follow-up run passed. No live network scan was performed by CI.
 
+
+## Scope items intentionally deferred from this initial upload
+- OS fingerprinting: not exposed in the current safe scan profiles.
+- DNS lookup, MAC-vendor/OUI lookup, and a separate connectivity-check command: not implemented in this first upload and must not be described as available.
+- These remain tracked follow-up items; any active network check must use the same private-target and explicit-authorization safeguards.
+
+## Latest CI record
+- Final documentation commit: `f916bd28a1224a42bb73f0a60549db1adc4cbcde`.
+- GitHub Actions run #12 completed successfully; Python compilation and all 9 synthetic tests passed.
+
 ## Future backlog (not part of initial scope)
 Signed release artifacts, offline report visualizations, and more synthetic XML edge-case fixtures.

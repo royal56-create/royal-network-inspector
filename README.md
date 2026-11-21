@@ -4,44 +4,44 @@ A safety-first Nmap + Python toolkit for inspecting networks you own or are expl
 
 ## Features
 - Private/loopback/link-local IP and CIDR validation; maximum 256 addresses per run
-- Dry-run by default; real scans require both `--authorized` and `--execute`
+- Blocks public, multicast, reserved, and unspecified scan targets
+- Dry-run by default; active operations require both `--authorized` and `--execute`
 - Nmap host discovery and conservative TCP top-100 service review
 - XML parsing, result summaries, cautious informational risk hints
 - JSON, CSV, and HTML reports; local scan history
+- DNS forward/reverse lookup and single-host TCP connectivity check
 - IP validation, subnet calculator, Nmap availability check
 - Synthetic-data unit tests and GitHub Actions CI (no live scans in CI)
 
 ## Requirements
-Python 3.10+. Nmap is required only for actual scans and must be available on PATH.
+Python 3.10+. Nmap is required only for actual Nmap scans and must be available on PATH.
 
 ## Quick start
 ```bash
 python main.py --help
 python main.py validate 192.168.1.10
 python main.py subnet 192.168.1.0/24
+python main.py dns lab.local
 python main.py scan 192.168.1.10 --dry-run
+python main.py connect-check 192.168.1.10 443
 ```
 
-For a permitted private lab host, preview first, then explicitly opt in:
+For an authorized private lab host, preview first:
 ```bash
 python main.py scan 192.168.1.10 --dry-run
 python main.py scan 192.168.1.10 --authorized --execute --format html
 python main.py discover 192.168.1.0/24 --authorized --execute
+python main.py connect-check 192.168.1.10 443 --authorized --execute
 ```
 
 ## Commands
-- `scan TARGET`: conservative TCP top-100 port/service review
+- `scan TARGET`: conservative TCP top-100 service review
 - `discover TARGET_OR_CIDR`: host discovery only
+- `dns NAME_OR_IP`: system-resolver A/AAAA or reverse PTR lookup
+- `connect-check IP PORT`: one TCP connection check; preview-only by default
 - `validate IP_OR_CIDR`, `subnet CIDR`, `nmap-check`
-- `analyze XML_FILE`: offline analysis of an existing XML file
+- `analyze XML_FILE`: offline analysis of an existing Nmap XML file
 
 Reports/history are local and may expose infrastructure details. They are excluded from Git. See [PROJECT_STATUS.md](PROJECT_STATUS.md), [docs/USER_GUIDE.md](docs/USER_GUIDE.md), [SECURITY.md](SECURITY.md), and [docs/LEGAL_AND_ETHICAL_USE.md](docs/LEGAL_AND_ETHICAL_USE.md).
 
-**Safety boundary:** public targets, arbitrary Nmap flags, NSE scripts, exploitation, brute force, stealth/evasion, credential collection, and DoS features are intentionally unsupported. A private IP does not itself grant permission. Obtain documented authorization.
-
-## Development
-```bash
-python -m unittest discover -s tests -v
-python -m compileall -q src main.py
-```
-CI uses synthetic fixtures only; it never scans a real network. MIT License.
+**Safety boundary:** public-target scans, arbitrary Nmap flags, NSE scripts, exploitation, brute force, stealth/evasion, credential collection, and DoS features are intentionally unsupported. DNS lookup is a normal resolver query. A private IP does not itself grant permission. Obtain documented authorization for active checks.

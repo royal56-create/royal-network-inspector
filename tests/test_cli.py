@@ -13,6 +13,13 @@ class CliTests(unittest.TestCase):
     def test_execute_requires_authorization(self):
         with patch("builtins.print"):
             self.assertEqual(main(["scan", "192.168.1.10", "--execute"]), 2)
+    def test_connect_check_defaults_to_dry_run(self):
+        with patch("builtins.print") as output:
+            self.assertEqual(main(["connect-check", "192.168.1.10", "443"]), 0)
+        self.assertTrue(any("DRY RUN" in str(call) for call in output.call_args_list))
+    def test_connect_check_requires_authorization(self):
+        with patch("builtins.print"):
+            self.assertEqual(main(["connect-check", "192.168.1.10", "443", "--execute"]), 2)
 
 if __name__ == "__main__":
     unittest.main()

@@ -36,7 +36,7 @@ GitHub Actions run #11 (commit `56da4477c10096059f9bdc1a8082899a26e27993`) compl
 
 ## Latest CI record
 - Final documentation commit: `f916bd28a1224a42bb73f0a60549db1adc4cbcde`.
-- GitHub Actions run #12 completed successfully; Python compilation and all 9 synthetic tests passed.
+- GitHub Actions run #13 completed successfully; Python compilation and all 9 synthetic tests passed.
 
 ## Future backlog (not part of initial scope)
 Signed release artifacts, offline report visualizations, and more synthetic XML edge-case fixtures.

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- Synthetic training fixture only; not output from a real scan. -->
+<nmaprun><host><status state="up"/><address addr="192.168.56.10" addrtype="ipv4"/>
+<hostnames><hostname name="training-vm"/></hostnames><ports>
+<port protocol="tcp" portid="22"><state state="open"/><service name="ssh" product="OpenSSH" version="9.0"/></port>
+<port protocol="tcp" portid="80"><state state="open"/><service name="http"/></port>
+</ports></host></nmaprun>

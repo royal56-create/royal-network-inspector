@@ -7,7 +7,7 @@
 - Release target: 1.0.0
 
 ## Agreed feature scope
-Private-lab host discovery, bounded TCP port/service inspection, Nmap XML parsing, result analysis, JSON/CSV/HTML reporting, local history, IP/CIDR validation, subnet calculator, Nmap availability check, modular code, documentation, synthetic tests, and GitHub Actions CI.
+Private-lab host discovery, bounded TCP port/service inspection, Nmap XML parsing, result analysis, JSON/CSV/HTML reporting, local history, IP/CIDR validation, subnet calculator, DNS forward/reverse lookup, single-host TCP connectivity check, Nmap availability check, modular code, documentation, synthetic tests, and GitHub Actions CI.
 
 ## Fixed safety decisions
 1. Dry-run is default. Real scans require both `--authorized` and `--execute`.
@@ -18,12 +18,17 @@ Private-lab host discovery, bounded TCP port/service inspection, Nmap XML parsin
 6. No NSE vulnerability scripts, exploitation, brute force, credential capture, stealth/evasion, or DoS.
 7. Tests and CI use synthetic data only.
 8. Local reports/history are ignored by Git.
+9. DNS lookup uses the configured resolver; TCP connect-check accepts one private IP and one port, defaults to dry-run, and requires both authorization flags to execute.
+10. Multicast, reserved, and unspecified targets are blocked.
 
 ## Work log — 2026-11-21
 - Repository URL received and verified as an existing public repository.
 - Version 1.0 scope converted into the initial project structure.
 - Uploaded the initial Python package, CLI, documentation, sample XML, tests, and GitHub Actions workflow.
 - Added JSON/CSV/HTML reporting, local scan-history support, and safety checks.
+- Added DNS A/AAAA and reverse PTR lookup plus a single-IP TCP connectivity check with explicit authorization gates.
+- Tightened target validation to reject multicast, reserved, and unspecified addresses.
+- Added synthetic diagnostic tests and updated the feature inventory and user guide.
 
 ## Verification
 GitHub Actions run #11 (commit `56da4477c10096059f9bdc1a8082899a26e27993`) completed successfully on 2026-11-21. Python compilation passed and all 9 synthetic unit tests passed. An earlier run exposed a discovery-mode XML-output mismatch; the command was corrected to use `-oX -`, and the follow-up run passed. No live network scan was performed by CI.
@@ -31,7 +36,7 @@ GitHub Actions run #11 (commit `56da4477c10096059f9bdc1a8082899a26e27993`) compl
 
 ## Scope items intentionally deferred from this initial upload
 - OS fingerprinting: not exposed in the current safe scan profiles.
-- DNS lookup, MAC-vendor/OUI lookup, and a separate connectivity-check command: not implemented in this first upload and must not be described as available.
+- MAC-vendor/OUI lookup and OS fingerprinting remain out of scope for this release.
 - These remain tracked follow-up items; any active network check must use the same private-target and explicit-authorization safeguards.
 
 ## Latest CI record

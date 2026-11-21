@@ -10,7 +10,7 @@ A safety-first Nmap + Python toolkit for inspecting networks you own or are expl
 - XML parsing, result summaries, cautious informational risk hints
 - JSON, CSV, and HTML reports; local scan history
 - DNS forward/reverse lookup and single-host TCP connectivity check
-- IP validation, subnet calculator, Nmap availability check
+- DNS forward/reverse lookup, single-host TCP connectivity check, IP validation, subnet calculator, Nmap availability check
 - Synthetic-data unit tests and GitHub Actions CI (no live scans in CI)
 
 ## Requirements
@@ -38,6 +38,8 @@ python main.py connect-check 192.168.1.10 443 --authorized --execute
 - `scan TARGET`: conservative TCP top-100 service review
 - `discover TARGET_OR_CIDR`: host discovery only
 - `dns NAME_OR_IP`: system-resolver A/AAAA or reverse PTR lookup
+- `connect-check IP PORT`: one TCP connection check; preview-only by default
+- `dns NAME_OR_IP`: forward A/AAAA or reverse PTR lookup
 - `connect-check IP PORT`: one TCP connection check; preview-only by default
 - `validate IP_OR_CIDR`, `subnet CIDR`, `nmap-check`
 - `analyze XML_FILE`: offline analysis of an existing Nmap XML file

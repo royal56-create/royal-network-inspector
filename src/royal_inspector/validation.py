@@ -15,6 +15,8 @@ def validate_target(target: str):
     count = parsed.num_addresses if "/" in value else 1
     if count > MAX_ADDRESSES:
         raise ValueError(f"Target range too large ({count}); maximum is {MAX_ADDRESSES}.")
+    if parsed.is_multicast or parsed.is_reserved or parsed.is_unspecified:
+        raise ValueError("Multicast, reserved, and unspecified targets are blocked.")
     if not (parsed.is_private or parsed.is_loopback or parsed.is_link_local):
         raise ValueError("Only private, loopback, or link-local targets are accepted. Public targets are blocked.")
     return parsed
@@ -24,6 +26,7 @@ def subnet_details(cidr: str) -> dict:
     network = ip_network(cidr, strict=False)
     if network.num_addresses > MAX_ADDRESSES:
         raise ValueError(f"Subnet exceeds the {MAX_ADDRESSES}-address limit.")
+    validate_target(str(network))
     hosts = list(network.hosts())
     return {
         "network": str(network), "version": network.version, "netmask": str(network.netmask),

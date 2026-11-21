@@ -1,5 +1,6 @@
 # Royal Network Inspector
 
+> **Educational / demo use only:** Review code before running it. Use only on files, devices, repositories, and networks you own or are explicitly authorized to access. Use at your own risk; no warranty is provided to the maximum extent permitted by applicable law. This notice does not waive non-waivable legal rights or obligations.\n
 A safety-first Nmap + Python toolkit for inspecting networks you own or are explicitly authorized to test.
 
 ## Features
@@ -47,7 +48,3 @@ python main.py connect-check 192.168.1.10 443 --authorized --execute
 Reports/history are local and may expose infrastructure details. They are excluded from Git. See [PROJECT_STATUS.md](PROJECT_STATUS.md), [docs/USER_GUIDE.md](docs/USER_GUIDE.md), [SECURITY.md](SECURITY.md), and [docs/LEGAL_AND_ETHICAL_USE.md](docs/LEGAL_AND_ETHICAL_USE.md).
 
 **Safety boundary:** public-target scans, arbitrary Nmap flags, NSE scripts, exploitation, brute force, stealth/evasion, credential collection, and DoS features are intentionally unsupported. DNS lookup is a normal resolver query. A private IP does not itself grant permission. Obtain documented authorization for active checks.
-
-## Educational use, safety and responsibility
-
-This repository is provided for educational, demonstration, and informational purposes. Review code and commands before use. Use it only with files, devices, repositories, and networks you own or are explicitly authorized to access. You are responsible for keeping backups, protecting personal information, and following applicable laws and policies. Use is at your own risk. The project is provided “as is” without warranties, to the maximum extent permitted by applicable law. Nothing in this notice excludes liability, rights, or obligations that cannot legally be excluded. This notice does not grant permission to access or test third-party systems.

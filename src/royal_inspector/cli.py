@@ -1,9 +1,10 @@
-"""Command-line interface with fail-closed scan gates."""
+"""Command-line interface with fail-closed active-operation gates."""
 import argparse
 import json
 import sys
 from pathlib import Path
 from .analyzer import analyze
+from .diagnostics import dns_lookup, tcp_connect_check
 from .history import record_history
 from .reports import write_report
 from .scanner import build_command, nmap_version, parse_nmap_xml, run_scan
@@ -26,6 +27,13 @@ def parser():
     subnet = commands.add_parser("subnet", help="Calculate details for a subnet up to 256 addresses.")
     subnet.add_argument("cidr")
     commands.add_parser("nmap-check", help="Check whether Nmap is installed.")
+    dns = commands.add_parser("dns", help="Resolve a hostname or perform reverse DNS for an IP.")
+    dns.add_argument("name")
+    connect = commands.add_parser("connect-check", help="Check one TCP port on an authorized private lab host.")
+    connect.add_argument("target")
+    connect.add_argument("port", type=int)
+    connect.add_argument("--authorized", action="store_true", help="Confirm you own the target or have explicit permission.")
+    connect.add_argument("--execute", action="store_true", help="Perform the TCP connection test; default is preview only.")
     offline = commands.add_parser("analyze", help="Analyze an existing Nmap XML file without scanning.")
     offline.add_argument("xml_file")
     return root
@@ -43,6 +51,23 @@ def main(argv=None):
             return 0
         if args.command == "nmap-check":
             print(json.dumps(nmap_version(), indent=2))
+            return 0
+        if args.command == "dns":
+            print(json.dumps(dns_lookup(args.name), indent=2))
+            return 0
+        if args.command == "connect-check":
+            validate_target(args.target)
+            if not 1 <= args.port <= 65535:
+                raise ValueError("Port must be between 1 and 65535.")
+            if not args.execute:
+                print("DRY RUN — no connection was attempted.")
+                print(f"Planned TCP connectivity check: {args.target}:{args.port}")
+                print("To proceed, confirm permission and add both --authorized and --execute.")
+                return 0
+            if not args.authorized:
+                print("Blocked: --authorized is required before execution.", file=sys.stderr)
+                return 2
+            print(json.dumps(tcp_connect_check(args.target, args.port), indent=2))
             return 0
         if args.command == "analyze":
             result = parse_nmap_xml(Path(args.xml_file).read_text(encoding="utf-8"))
